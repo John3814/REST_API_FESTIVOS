@@ -1,6 +1,7 @@
 package com.udea.festivos.controladores;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.udea.festivos.entidades.dtos.FestivoDto;
 import com.udea.festivos.interfaces.IFestivoServicio;
 
 @RestController
@@ -43,6 +45,19 @@ public class FestivoControlador {
             return ResponseEntity.ok().body(mensaje);
         }
         return ResponseEntity.badRequest().body("Fecha no valida");
+    }
+
+    
+    /**
+     * Método para obtener los días festivos para un año específico.
+     *
+     * @param año El año para el cual se desean obtener los días festivos.
+     * @return Una lista de objetos FestivoDto que representan los días festivos
+     *         para el año dado.
+     */
+    @GetMapping("/obtener/{año}")
+    public ResponseEntity<List<FestivoDto>> getFestivosParaAño(@PathVariable Integer año) {
+        return ResponseEntity.ok().body(this.servicio.obtenerFestivos(año));
     }
 
 }
